@@ -9,5 +9,25 @@
             API đăng nhập để lấy JWT Token.
             </summary>
         </member>
+        <member name="M:AIBE.WebApi.Controller.v1.UserController.GetAll(System.Int32,System.Int32)">
+            <summary>
+            Xem chi tiết các user.
+            </summary>
+        </member>
+        <member name="M:AIBE.WebApi.Controller.v1.UserController.GetById(System.Int32)">
+            <summary>
+            Xem chi tiết các user.
+            </summary>
+        </member>
+        <member name="M:AIBE.WebApi.Controller.v1.UserController.Create(AIBE.Core.DTOs.User.CreateUserDto)">
+            <summary>
+            Tạo user mới.
+            </summary>
+        </member>
+        <member name="M:AIBE.WebApi.Controller.v1.UserController.Update(System.Int32,AIBE.Core.DTOs.User.UpdateUserDto)">
+            <summary>
+            Cập nhật thông tin user.
+            </summary>
+        </member>
     </members>
 </doc>

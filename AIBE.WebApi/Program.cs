@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using AIBE.Core.Helpers.mapper;
 using AIBE.Core.Helpers.middleware;
 using AIBE.Core.IRepository;
 using AIBE.Core.Models;
@@ -29,7 +30,9 @@ builder.Services.AddDbContext<DoctaskAiContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddScoped<IOrgRepository,OrgRepository>();
+builder.Services.AddAutoMapper(typeof(UserMapper));
+builder.Services.AddScoped<IOrgRepository, OrgRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 
 builder.Services.AddAuthentication(Options =>
