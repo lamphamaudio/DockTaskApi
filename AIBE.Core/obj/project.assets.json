@@ -4770,23 +4770,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Lam Pham\\.nuget\\packages\\": {},
+    "C:\\Users\\Administrator\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj",
+      "projectUniqueName": "D:\\Zamiga\\Pilot\\DocTask_AI\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj",
       "projectName": "AIBE.Core",
-      "projectPath": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj",
-      "packagesPath": "C:\\Users\\Lam Pham\\.nuget\\packages\\",
-      "outputPath": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Core\\obj\\",
+      "projectPath": "D:\\Zamiga\\Pilot\\DocTask_AI\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj",
+      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+      "outputPath": "D:\\Zamiga\\Pilot\\DocTask_AI\\DockTaskApi\\AIBE.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Lam Pham\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4794,7 +4794,8 @@
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "D:\\fix": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4867,30 +4868,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[8.0.19, 8.0.19]"
-          },
-          {
-            "name": "Microsoft.Net.Sdk.Compilers.Toolset",
-            "version": "[9.0.304, 9.0.304]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[8.0.19, 8.0.19]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[8.0.19, 8.0.19]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   },

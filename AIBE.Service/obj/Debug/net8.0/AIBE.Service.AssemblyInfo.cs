@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AIBE.Service")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b78fc28763b4c1aa631aa476d4d2c1f83452dea9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bf82dd5ec5f281bc9f83d71749ee7a4bcbfd206a")]
 [assembly: System.Reflection.AssemblyProductAttribute("AIBE.Service")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AIBE.Service")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
