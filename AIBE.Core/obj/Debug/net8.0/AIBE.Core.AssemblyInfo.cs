@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AIBE.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bf82dd5ec5f281bc9f83d71749ee7a4bcbfd206a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f72f4a844a37f70549870f8ae43de073090aeb50")]
 [assembly: System.Reflection.AssemblyProductAttribute("AIBE.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AIBE.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
