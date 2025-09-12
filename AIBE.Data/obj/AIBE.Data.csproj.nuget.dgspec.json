@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Zamiga\\project5\\doc-task-asp.net\\AIBE.Data\\AIBE.Data.csproj": {}
+    "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Data\\AIBE.Data.csproj": {}
   },
   "projects": {
-    "D:\\Zamiga\\project5\\doc-task-asp.net\\AIBE.Core\\AIBE.Core.csproj": {
+    "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Zamiga\\project5\\doc-task-asp.net\\AIBE.Core\\AIBE.Core.csproj",
+        "projectUniqueName": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj",
         "projectName": "AIBE.Core",
-        "projectPath": "D:\\Zamiga\\project5\\doc-task-asp.net\\AIBE.Core\\AIBE.Core.csproj",
+        "projectPath": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj",
         "packagesPath": "C:\\Users\\Lam Pham\\.nuget\\packages\\",
-        "outputPath": "D:\\Zamiga\\project5\\doc-task-asp.net\\AIBE.Core\\obj\\",
+        "outputPath": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -125,14 +125,14 @@
         }
       }
     },
-    "D:\\Zamiga\\project5\\doc-task-asp.net\\AIBE.Data\\AIBE.Data.csproj": {
+    "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Data\\AIBE.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Zamiga\\project5\\doc-task-asp.net\\AIBE.Data\\AIBE.Data.csproj",
+        "projectUniqueName": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Data\\AIBE.Data.csproj",
         "projectName": "AIBE.Data",
-        "projectPath": "D:\\Zamiga\\project5\\doc-task-asp.net\\AIBE.Data\\AIBE.Data.csproj",
+        "projectPath": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Data\\AIBE.Data.csproj",
         "packagesPath": "C:\\Users\\Lam Pham\\.nuget\\packages\\",
-        "outputPath": "D:\\Zamiga\\project5\\doc-task-asp.net\\AIBE.Data\\obj\\",
+        "outputPath": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -153,8 +153,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Zamiga\\project5\\doc-task-asp.net\\AIBE.Core\\AIBE.Core.csproj": {
-                "projectPath": "D:\\Zamiga\\project5\\doc-task-asp.net\\AIBE.Core\\AIBE.Core.csproj"
+              "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj": {
+                "projectPath": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj"
               }
             }
           }
