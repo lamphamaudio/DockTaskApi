@@ -1,0 +1,393 @@
+/*
+  Doctask Swagger Specs - multiple api files collected in one document
+  Each section below is a separate file. Copy each section into
+  `swagger/api/<filename>.js` and import them from spec.js
+
+  Files included:
+    - auth.api.js
+    - user.api.js
+    - org.api.js
+    - unit.api.js
+    - unituser.api.js
+    - role.api.js
+    - userrole.api.js
+    - task.api.js
+    - taskunitassignment.api.js
+    - frequency.api.js
+    - frequencydetail.api.js
+    - period.api.js
+    - progress.api.js
+    - report_review.api.js
+    - uploadfile.api.js
+    - reminder.api.js
+    - reminder_unit.api.js
+    - report_summary.api.js
+    - swagger-config.js (merge file)
+    - index.html snippet (how to load)
+
+  NOTE: Copy each block into its own file under `swagger/api/` as named.
+*/
+
+/* ======= auth.api.js ======= */
+const authApi = {
+  paths: {
+    "/auth/login": {
+      post: {
+        tags: ["Auth"],
+        summary: "Đăng nhập",
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/AuthLogin" }
+            }
+          }
+        },
+        responses: {
+          200: {
+            description: "JWT token",
+            content: { "application/json": { schema: { $ref: "#/components/schemas/AuthResponse" } } }
+          },
+          401: { description: "Unauthorized" }
+        }
+      }
+    },
+    "/auth/logout": {
+      post: {
+        tags: ["Auth"],
+        summary: "Đăng xuất (invalidate token)",
+        responses: { 200: { description: "Đã logout" } }
+      }
+    },
+    "/auth/refresh": {
+      post: {
+        tags: ["Auth"],
+        summary: "Refresh token",
+        requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/AuthRefresh" } } } },
+        responses: { 200: { description: "New tokens", content: { "application/json": { schema: { $ref: "#/components/schemas/AuthResponse" } } } } }
+      }
+    },
+    "/auth/me": {
+      get: {
+        tags: ["Auth"],
+        summary: "Lấy thông tin user hiện tại",
+        security: [{ bearerAuth: [] }],
+        responses: { 200: { description: "User hiện tại", content: { "application/json": { schema: { $ref: "#/components/schemas/User" } } } }, 401: { description: "Unauthorized" } }
+      }
+    }
+  },
+  components: {
+    schemas: {
+      AuthLogin: {
+        type: "object",
+        required: ["username", "password"],
+        properties: { username: { type: "string" }, password: { type: "string" } }
+      },
+      AuthRefresh: { type: "object", required: ["refreshToken"], properties: { refreshToken: { type: "string" } } },
+      AuthResponse: { type: "object", properties: { accessToken: { type: "string" }, refreshToken: { type: "string" }, expiresIn: { type: "integer" } } }
+    }
+  }
+};
+
+/* ======= user.api.js ======= */
+const userApi = {
+  paths: {
+    "/users": {
+      get: {
+        tags: ["User"],
+        summary: "Lấy danh sách user",
+        parameters: [
+          { name: "page", in: "query", schema: { type: "integer" } },
+          { name: "size", in: "query", schema: { type: "integer" } },
+          { name: "q", in: "query", schema: { type: "string" }, description: "search by name or username" }
+        ],
+        responses: { 200: { description: "Danh sách user", content: { "application/json": { schema: { type: "array", items: { $ref: "#/components/schemas/User" } } } } } }
+      },
+      post: {
+        tags: ["User"],
+        summary: "Tạo user mới",
+        requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/UserCreate" } } } },
+        responses: { 201: { description: "User đã được tạo", content: { "application/json": { schema: { $ref: "#/components/schemas/User" } } } } }
+      }
+    },
+    "/users/{userId}": {
+      get: { tags: ["User"], summary: "Lấy thông tin user theo ID", parameters: [{ name: "userId", in: "path", required: true, schema: { type: "integer" } }], responses: { 200: { description: "Thông tin user", content: { "application/json": { schema: { $ref: "#/components/schemas/User" } } } }, 404: { description: "Không tìm thấy user" } } },
+      put: { tags: ["User"], summary: "Cập nhật user", parameters: [{ name: "userId", in: "path", required: true, schema: { type: "integer" } }], requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/UserUpdate" } } } }, responses: { 200: { description: "Cập nhật thành công", content: { "application/json": { schema: { $ref: "#/components/schemas/User" } } } } } },
+      delete: { tags: ["User"], summary: "Xóa user", parameters: [{ name: "userId", in: "path", required: true, schema: { type: "integer" } }], responses: { 204: { description: "Xóa thành công" } } }
+    },
+    "/users/{userId}/roles": {
+      post: { tags: ["User"], summary: "Gán vai trò cho user", parameters: [{ name: "userId", in: "path", required: true, schema: { type: "integer" } }], requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/UserRoleAssign" } } } }, responses: { 200: { description: "Đã gán role" } } }
+    },
+    "/users/{userId}/tasks": {
+      get: { tags: ["User"], summary: "Danh sách task được gán cho user", parameters: [{ name: "userId", in: "path", required: true, schema: { type: "integer" } }], responses: { 200: { description: "Danh sách task", content: { "application/json": { schema: { type: "array", items: { $ref: "#/components/schemas/Task" } } } } } }
+    }
+  },
+  components: {
+    schemas: {
+      User: {
+        type: "object",
+        properties: {
+          userId: { type: "integer" },
+          username: { type: "string" },
+          fullName: { type: "string" },
+          email: { type: "string" },
+          phoneNumber: { type: "string" },
+          position: { type: "string" },
+          positionId: { type: "integer" },
+          orgId: { type: "integer" },
+          unitId: { type: "integer" },
+          userParent: { type: "integer" },
+          createdAt: { type: "string", format: "date-time" }
+        }
+      },
+      UserCreate: { type: "object", required: ["username", "password", "fullName"], properties: { username: { type: "string" }, password: { type: "string" }, fullName: { type: "string" }, email: { type: "string" }, phoneNumber: { type: "string" }, position: { type: "string" }, orgId: { type: "integer" }, unitId: { type: "integer" } } },
+      UserUpdate: { type: "object", properties: { fullName: { type: "string" }, email: { type: "string" }, phoneNumber: { type: "string" }, position: { type: "string" }, orgId: { type: "integer" }, unitId: { type: "integer" } } },
+      UserRoleAssign: { type: "object", required: ["roleId"], properties: { roleId: { type: "integer" } } }
+    }
+  }
+};
+
+/* ======= org.api.js ======= */
+const orgApi = {
+  paths: {
+    "/orgs": {
+      get: { tags: ["Org"], summary: "Lấy danh sách tổ chức", responses: { 200: { description: "Danh sách org", content: { "application/json": { schema: { type: "array", items: { $ref: "#/components/schemas/Org" } } } } } } },
+      post: { tags: ["Org"], summary: "Tạo tổ chức", requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/OrgCreate" } } } }, responses: { 201: { description: "Tạo org thành công" } } }
+    },
+    "/orgs/{orgId}": {
+      put: { tags: ["Org"], summary: "Cập nhật org", parameters: [{ name: "orgId", in: "path", required: true, schema: { type: "integer" } }], requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/OrgCreate" } } } }, responses: { 200: { description: "Cập nhật thành công" } } },
+      delete: { tags: ["Org"], summary: "Xóa org", parameters: [{ name: "orgId", in: "path", required: true, schema: { type: "integer" } }], responses: { 204: { description: "Xóa thành công" } } }
+    }
+  },
+  components: { schemas: { Org: { type: "object", properties: { orgId: { type: "integer" }, orgName: { type: "string" }, parentOrgId: { type: "integer" }, createdAt: { type: "string", format: "date-time" } } }, OrgCreate: { type: "object", required: ["orgName"], properties: { orgName: { type: "string" }, parentOrgId: { type: "integer" } } } } }
+};
+
+/* ======= unit.api.js ======= */
+const unitApi = {
+  paths: {
+    "/units": {
+      get: { tags: ["Unit"], summary: "Lấy danh sách đơn vị", responses: { 200: { description: "Danh sách unit", content: { "application/json": { schema: { type: "array", items: { $ref: "#/components/schemas/Unit" } } } } } } },
+      post: { tags: ["Unit"], summary: "Tạo đơn vị", requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/UnitCreate" } } } }, responses: { 201: { description: "Tạo unit thành công" } } }
+    },
+    "/units/{unitId}": {
+      put: { tags: ["Unit"], summary: "Cập nhật unit", parameters: [{ name: "unitId", in: "path", required: true, schema: { type: "integer" } }], requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/UnitCreate" } } } }, responses: { 200: { description: "Cập nhật thành công" } } },
+      delete: { tags: ["Unit"], summary: "Xóa unit", parameters: [{ name: "unitId", in: "path", required: true, schema: { type: "integer" } }], responses: { 204: { description: "Xóa thành công" } } }
+    },
+    "/units/{unitId}/users": {
+      post: { tags: ["Unit"], summary: "Gán user vào đơn vị", parameters: [{ name: "unitId", in: "path", required: true, schema: { type: "integer" } }], requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/UnitUserCreate" } } } }, responses: { 201: { description: "Đã gán user" } } }
+    },
+    "/units/{unitId}/users/{userId}": {
+      delete: { tags: ["Unit"], summary: "Xóa user khỏi đơn vị", parameters: [{ name: "unitId", in: "path", required: true, schema: { type: "integer" } }, { name: "userId", in: "path", required: true, schema: { type: "integer" } }], responses: { 204: { description: "Đã xóa" } } }
+    }
+  },
+  components: { schemas: { Unit: { type: "object", properties: { unitId: { type: "integer" }, orgId: { type: "integer" }, unitName: { type: "string" }, type: { type: "string" }, unitParent: { type: "integer" }, userId: { type: "integer" } } }, UnitCreate: { type: "object", required: ["unitName", "orgId"], properties: { orgId: { type: "integer" }, unitName: { type: "string" }, type: { type: "string" }, unitParent: { type: "integer" }, userId: { type: "integer" } } }, UnitUserCreate: { type: "object", required: ["userId"], properties: { userId: { type: "integer" }, type: { type: "string", enum: ["official","virtual"] }, positionId: { type: "integer" } } } } }
+};
+
+/* ======= unituser.api.js ======= */
+const unituserApi = {
+  paths: {
+    "/unitusers": {
+      get: { tags: ["UnitUser"], summary: "Danh sách liên kết user-unit", responses: { 200: { description: "Danh sách", content: { "application/json": { schema: { type: "array", items: { $ref: "#/components/schemas/UnitUser" } } } } } } },
+      post: { tags: ["UnitUser"], summary: "Tạo liên kết user-unit", requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/UnitUserCreate" } } } }, responses: { 201: { description: "Created" } } }
+    },
+    "/unitusers/{id}": { delete: { tags: ["UnitUser"], summary: "Xóa liên kết", parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }], responses: { 204: { description: "Deleted" } } } }
+  },
+  components: { schemas: { UnitUser: { type: "object", properties: { unitUserId: { type: "integer" }, userId: { type: "integer" }, unitId: { type: "integer" }, type: { type: "string" }, positionId: { type: "integer" }, createdAt: { type: "string", format: "date-time" } } }, UnitUserCreate: { type: "object", required: ["userId","unitId"], properties: { userId: { type: "integer" }, unitId: { type: "integer" }, type: { type: "string", enum: ["official","virtual"] }, positionId: { type: "integer" } } } } }
+};
+
+/* ======= role.api.js ======= */
+const roleApi = {
+  paths: {
+    "/roles": {
+      get: { tags: ["Role"], summary: "Danh sách role", responses: { 200: { description: "OK", content: { "application/json": { schema: { type: "array", items: { $ref: "#/components/schemas/Role" } } } } } } },
+      post: { tags: ["Role"], summary: "Tạo role", requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/RoleCreate" } } } }, responses: { 201: { description: "Created" } } }
+    },
+    "/roles/{id}": { put: { tags: ["Role"], parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }], requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/RoleCreate" } } } }, responses: { 200: { description: "Updated" } } }, delete: { tags: ["Role"], parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }], responses: { 204: { description: "Deleted" } } } }
+  },
+  components: { schemas: { Role: { type: "object", properties: { roleId: { type: "integer" }, roleName: { type: "string" }, description: { type: "string" }, createdAt: { type: "string", format: "date-time" } } }, RoleCreate: { type: "object", required: ["roleName"], properties: { roleName: { type: "string" }, description: { type: "string" } } } } }
+};
+
+/* ======= userrole.api.js ======= */
+const userroleApi = {
+  paths: {
+    "/userroles": { get: { tags: ["UserRole"], summary: "Danh sách user-role", responses: { 200: { description: "OK" } } }, post: { tags: ["UserRole"], summary: "Gán role", requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/UserRoleCreate" } } } }, responses: { 201: { description: "Created" } } } },
+    "/userroles/{id}": { delete: { tags: ["UserRole"], parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }], responses: { 204: { description: "Deleted" } } } }
+  },
+  components: { schemas: { UserRoleCreate: { type: "object", required: ["userId","roleId"], properties: { userId: { type: "integer" }, roleId: { type: "integer" } } } } }
+};
+
+/* ======= task.api.js ======= */
+const taskApi = {
+  paths: {
+    "/tasks": {
+      get: { tags: ["Task"], summary: "Danh sách công việc", parameters: [{ name: "status", in: "query", schema: { type: "string" } }, { name: "assigneeId", in: "query", schema: { type: "integer" } }], responses: { 200: { description: "OK", content: { "application/json": { schema: { type: "array", items: { $ref: "#/components/schemas/Task" } } } } } } },
+      post: { tags: ["Task"], summary: "Tạo công việc", requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/TaskCreate" } } } }, responses: { 201: { description: "Created", content: { "application/json": { schema: { $ref: "#/components/schemas/Task" } } } } }
+    },
+    "/tasks/{taskId}": { get: { tags: ["Task"], summary: "Chi tiết task", parameters: [{ name: "taskId", in: "path", required: true, schema: { type: "integer" } }], responses: { 200: { description: "OK", content: { "application/json": { schema: { $ref: "#/components/schemas/Task" } } } }, 404: { description: "Not found" } } }, put: { tags: ["Task"], summary: "Cập nhật task", parameters: [{ name: "taskId", in: "path", required: true, schema: { type: "integer" } }], requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/TaskUpdate" } } } }, responses: { 200: { description: "Updated" } } }, delete: { tags: ["Task"], summary: "Xóa task", parameters: [{ name: "taskId", in: "path", required: true, schema: { type: "integer" } }], responses: { 204: { description: "Deleted" } } } },
+    "/tasks/{taskId}/assign": { post: { tags: ["Task"], summary: "Giao việc cho user hoặc unit", parameters: [{ name: "taskId", in: "path", required: true, schema: { type: "integer" } }], requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/TaskAssign" } } } }, responses: { 200: { description: "Assigned" } } } },
+    "/tasks/{taskId}/progress": { get: { tags: ["Task"], summary: "Lấy tiến độ task", parameters: [{ name: "taskId", in: "path", required: true, schema: { type: "integer" } }], responses: { 200: { description: "OK", content: { "application/json": { schema: { type: "array", items: { $ref: "#/components/schemas/Progress" } } } } } } },
+    "/users/{userId}/tasks": { get: { tags: ["Task"], summary: "Danh sách task của user", parameters: [{ name: "userId", in: "path", required: true, schema: { type: "integer" } }], responses: { 200: { description: "OK" } } } }
+  },
+  components: { schemas: { Task: { type: "object", properties: { taskId: { type: "integer" }, title: { type: "string" }, description: { type: "string" }, assignerId: { type: "integer" }, assigneeId: { type: "integer" }, orgId: { type: "integer" }, status: { type: "string" }, priority: { type: "string" }, startDate: { type: "string", format: "date" }, dueDate: { type: "string", format: "date" }, createdAt: { type: "string", format: "date-time" }, periodId: { type: "integer" }, taskParentId: { type: "integer" }, attachedFile: { type: "integer" }, frequencyId: { type: "integer" } } }, TaskCreate: { type: "object", required: ["title"], properties: { title: { type: "string" }, description: { type: "string" }, assignerId: { type: "integer" }, assigneeId: { type: "integer" }, orgId: { type: "integer" }, status: { type: "string" }, priority: { type: "string" }, startDate: { type: "string", format: "date" }, dueDate: { type: "string", format: "date" }, periodId: { type: "integer" }, taskParentId: { type: "integer" }, frequencyId: { type: "integer" } } }, TaskUpdate: { type: "object", properties: { title: { type: "string" }, description: { type: "string" }, assigneeId: { type: "integer" }, status: { type: "string" }, priority: { type: "string" }, startDate: { type: "string", format: "date" }, dueDate: { type: "string", format: "date" } } }, TaskAssign: { type: "object", properties: { assigneeId: { type: "integer" }, unitId: { type: "integer" } } } } }
+};
+
+/* ======= taskunitassignment.api.js ======= */
+const taskunitassignmentApi = {
+  paths: {
+    "/taskunitassignments": { get: { tags: ["TaskUnitAssignment"], summary: "Danh sách phân công task-unit" , responses: { 200: { description: "OK" } } }, post: { tags: ["TaskUnitAssignment"], summary: "Tạo phân công", requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/TaskUnitAssignmentCreate" } } } }, responses: { 201: { description: "Created" } } } },
+    "/taskunitassignments/{id}": { delete: { tags: ["TaskUnitAssignment"], parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }], responses: { 204: { description: "Deleted" } } } }
+  },
+  components: { schemas: { TaskUnitAssignmentCreate: { type: "object", required: ["taskId","unitId"], properties: { taskId: { type: "integer" }, unitId: { type: "integer" } } } } }
+};
+
+/* ======= frequency.api.js ======= */
+const frequencyApi = {
+  paths: {
+    "/frequencies": { get: { tags: ["Frequency"], summary: "Danh sách tần suất", responses: { 200: { description: "OK" } } }, post: { tags: ["Frequency"], summary: "Tạo tần suất", requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/FrequencyCreate" } } } }, responses: { 201: { description: "Created" } } } },
+    "/frequencies/{id}": { put: { tags: ["Frequency"], parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }], requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/FrequencyCreate" } } } }, responses: { 200: { description: "Updated" } } }, delete: { tags: ["Frequency"], parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }], responses: { 204: { description: "Deleted" } } } }
+  },
+  components: { schemas: { FrequencyCreate: { type: "object", required: ["frequencyType","intervalValue"], properties: { frequencyType: { type: "string", enum: ["daily","weekly","monthly","quarter","custom"] }, frequencyDetail: { type: "string" }, intervalValue: { type: "integer" }, taskId: { type: "integer" } } } } }
+};
+
+/* ======= frequencydetail.api.js ======= */
+const frequencydetailApi = {
+  paths: {
+    "/frequencydetails": { get: { tags: ["FrequencyDetail"], summary: "Danh sách chi tiết tần suất", responses: { 200: { description: "OK" } } }, post: { tags: ["FrequencyDetail"], summary: "Tạo chi tiết", requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/FrequencyDetailCreate" } } } }, responses: { 201: { description: "Created" } } } },
+    "/frequencydetails/{id}": { delete: { tags: ["FrequencyDetail"], parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }], responses: { 204: { description: "Deleted" } } } }
+  },
+  components: { schemas: { FrequencyDetailCreate: { type: "object", required: ["frequencyId"], properties: { frequencyId: { type: "integer" }, dayOfWeek: { type: "integer" }, dayOfMonth: { type: "integer" }, weekOfMonth: { type: "integer" } } } } }
+};
+
+/* ======= period.api.js ======= */
+const periodApi = {
+  paths: {
+    "/periods": { get: { tags: ["Period"], summary: "Danh sách kỳ báo cáo", responses: { 200: { description: "OK" } } }, post: { tags: ["Period"], summary: "Tạo kỳ báo cáo", requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/PeriodCreate" } } } }, responses: { 201: { description: "Created" } } } },
+    "/periods/{id}": { put: { tags: ["Period"], parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }], requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/PeriodCreate" } } } }, responses: { 200: { description: "Updated" } } }, delete: { tags: ["Period"], parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }], responses: { 204: { description: "Deleted" } } } }
+  },
+  components: { schemas: { PeriodCreate: { type: "object", required: ["periodName","startDate","endDate"], properties: { periodName: { type: "string" }, startDate: { type: "string", format: "date" }, endDate: { type: "string", format: "date" } } } } }
+};
+
+/* ======= progress.api.js ======= */
+const progressApi = {
+  paths: {
+    "/tasks/{taskId}/progress": {
+      get: { tags: ["Progress"], summary: "Lấy tiến độ task", parameters: [{ name: "taskId", in: "path", required: true, schema: { type: "integer" } }], responses: { 200: { description: "OK" } } },
+      post: { tags: ["Progress"], summary: "Cập nhật báo cáo tiến độ", parameters: [{ name: "taskId", in: "path", required: true, schema: { type: "integer" } }], requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/ProgressCreate" } } } }, responses: { 201: { description: "Created" } } }
+    },
+    "/progress/{progressId}": { put: { tags: ["Progress"], summary: "Sửa báo cáo", parameters: [{ name: "progressId", in: "path", required: true, schema: { type: "integer" } }], requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/ProgressUpdate" } } } }, responses: { 200: { description: "Updated" } } } },
+    "/progress/{progressId}/review": { post: { tags: ["Progress"], summary: "Duyệt báo cáo", parameters: [{ name: "progressId", in: "path", required: true, schema: { type: "integer" } }], requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/ReviewCreate" } } } }, responses: { 200: { description: "Reviewed" } } }, get: { tags: ["Progress"], summary: "Lấy chi tiết duyệt", parameters: [{ name: "progressId", in: "path", required: true, schema: { type: "integer" } }], responses: { 200: { description: "OK" } } } },
+    "/tasks/{taskId}/reports": { get: { tags: ["Progress"], summary: "Lấy danh sách báo cáo của task", parameters: [{ name: "taskId", in: "path", required: true, schema: { type: "integer" } }], responses: { 200: { description: "OK" } } } }
+  },
+  components: { schemas: { ProgressCreate: { type: "object", required: ["percentageComplete"], properties: { percentageComplete: { type: "integer" }, comment: { type: "string" }, proposal: { type: "string" }, result: { type: "string" }, feedback: { type: "string" }, updatedBy: { type: "integer" }, fileName: { type: "string" }, filePath: { type: "string" } } }, ProgressUpdate: { type: "object", properties: { percentageComplete: { type: "integer" }, comment: { type: "string" } } }, ReviewCreate: { type: "object", required: ["status"], properties: { status: { type: "string", enum: ["approved","rejected"] }, comment: { type: "string" }, reviewerId: { type: "integer" } } } } }
+};
+
+/* ======= report_review.api.js ======= */
+const reportReviewApi = {
+  paths: {
+    "/report_reviews": { get: { tags: ["ReportReview"], summary: "Danh sách duyệt báo cáo", responses: { 200: { description: "OK" } } }, post: { tags: ["ReportReview"], summary: "Tạo record duyệt", requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/ReportReviewCreate" } } } }, responses: { 201: { description: "Created" } } } },
+    "/report_reviews/{id}": { get: { tags: ["ReportReview"], parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }], responses: { 200: { description: "OK" } } } }
+  },
+  components: { schemas: { ReportReviewCreate: { type: "object", required: ["progressId","status"], properties: { progressId: { type: "integer" }, reviewerId: { type: "integer" }, status: { type: "string" }, comment: { type: "string" } } } } }
+};
+
+/* ======= uploadfile.api.js ======= */
+const uploadfileApi = {
+  paths: {
+    "/files/upload": {
+      post: { tags: ["File"], summary: "Upload file (multipart)", requestBody: { required: true, content: { "multipart/form-data": { schema: { type: "object", properties: { file: { type: "string", format: "binary" }, taskId: { type: "integer" }, progressId: { type: "integer" } } } } } }, responses: { 201: { description: "Uploaded", content: { "application/json": { schema: { $ref: "#/components/schemas/UploadFile" } } } } } }
+    },
+    "/files/{fileId}": { get: { tags: ["File"], summary: "Tải file", parameters: [{ name: "fileId", in: "path", required: true, schema: { type: "integer" } }], responses: { 200: { description: "file binary" } } }, delete: { tags: ["File"], summary: "Xóa file", parameters: [{ name: "fileId", in: "path", required: true, schema: { type: "integer" } }], responses: { 204: { description: "Deleted" } } } }
+  },
+  components: { schemas: { UploadFile: { type: "object", properties: { fileId: { type: "integer" }, taskId: { type: "integer" }, progressId: { type: "integer" }, fileName: { type: "string" }, filePath: { type: "string" }, uploadedBy: { type: "integer" }, uploadedAt: { type: "string", format: "date-time" } } } } }
+};
+
+/* ======= reminder.api.js ======= */
+const reminderApi = {
+  paths: {
+    "/reminders": { post: { tags: ["Reminder"], summary: "Tạo nhắc nhở", requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/ReminderCreate" } } } }, responses: { 201: { description: "Created" } } }, get: { tags: ["Reminder"], summary: "Danh sách reminders (có filter userId)", parameters: [{ name: "userId", in: "query", schema: { type: "integer" } }], responses: { 200: { description: "OK" } } } },
+    "/reminders/{id}": { put: { tags: ["Reminder"], parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }], requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/ReminderCreate" } } } }, responses: { 200: { description: "Updated" } } }, delete: { tags: ["Reminder"], parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }], responses: { 204: { description: "Deleted" } } } }
+  },
+  components: { schemas: { ReminderCreate: { type: "object", required: ["taskId","userId"], properties: { taskId: { type: "integer" }, periodId: { type: "integer" }, userId: { type: "integer" }, createdBy: { type: "integer" }, notificationId: { type: "integer" }, title: { type: "string" }, message: { type: "string" }, triggerTime: { type: "string", format: "date-time" }, type: { type: "string" } } } } }
+};
+
+/* ======= reminder_unit.api.js ======= */
+const reminderUnitApi = {
+  paths: {
+    "/reminder_units": { post: { tags: ["ReminderUnit"], summary: "Gán nhắc nhở cho nhiều đơn vị", requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/ReminderUnitCreate" } } } }, responses: { 201: { description: "Created" } } }, get: { tags: ["ReminderUnit"], summary: "Danh sách" , responses: { 200: { description: "OK" } } } },
+    "/reminder_units/{id}": { delete: { tags: ["ReminderUnit"], parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }], responses: { 204: { description: "Deleted" } } } }
+  },
+  components: { schemas: { ReminderUnitCreate: { type: "object", required: ["reminderId","unitId"], properties: { reminderId: { type: "integer" }, unitId: { type: "integer" } } } } }
+};
+
+/* ======= report_summary.api.js ======= */
+const reportSummaryApi = {
+  paths: {
+    "/reports/summary": { get: { tags: ["ReportSummary"], summary: "Lấy báo cáo tổng hợp", parameters: [{ name: "taskId", in: "query", schema: { type: "integer" } }, { name: "periodId", in: "query", schema: { type: "integer" } }], responses: { 200: { description: "Summary", content: { "application/json": { schema: { $ref: "#/components/schemas/ReportSummary" } } } } } },
+    "/reports/summary/generate": { post: { tags: ["ReportSummary"], summary: "Tạo/tổng hợp báo cáo (AI)", requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/ReportSummaryCreate" } } } }, responses: { 201: { description: "Created" } } } }
+  },
+  components: { schemas: { ReportSummary: { type: "object", properties: { reportId: { type: "integer" }, taskId: { type: "integer" }, periodId: { type: "integer" }, summary: { type: "string" }, createdBy: { type: "integer" }, reportFile: { type: "integer" }, createdAt: { type: "string", format: "date-time" } } }, ReportSummaryCreate: { type: "object", required: ["taskId","periodId"], properties: { taskId: { type: "integer" }, periodId: { type: "integer" } } } } }
+};
+
+/* ======= swagger-config.js (merge) ======= */
+const spec = {
+  openapi: "3.0.0",
+  info: { title: "Doctask API", version: "1.0.0", description: "API for Doctask system" },
+  servers: [{ url: "http://localhost:8080/api/v1" }],
+  paths: {
+    ...authApi.paths,
+    ...userApi.paths,
+    ...orgApi.paths,
+    ...unitApi.paths,
+    ...unituserApi.paths,
+    ...roleApi.paths,
+    ...userroleApi.paths,
+    ...taskApi.paths,
+    ...taskunitassignmentApi.paths,
+    ...frequencyApi.paths,
+    ...frequencydetailApi.paths,
+    ...periodApi.paths,
+    ...progressApi.paths,
+    ...reportReviewApi.paths,
+    ...uploadfileApi.paths,
+    ...reminderApi.paths,
+    ...reminderUnitApi.paths,
+    ...reportSummaryApi.paths
+  },
+  components: {
+    schemas: {
+      ...authApi.components.schemas,
+      ...userApi.components.schemas,
+      ...orgApi.components.schemas,
+      ...unitApi.components.schemas,
+      ...unituserApi.components.schemas,
+      ...roleApi.components.schemas,
+      ...userroleApi.components.schemas,
+      ...taskApi.components.schemas,
+      ...taskunitassignmentApi.components.schemas,
+      ...frequencyApi.components.schemas,
+      ...frequencydetailApi.components.schemas,
+      ...periodApi.components.schemas,
+      ...progressApi.components.schemas,
+      ...reportReviewApi.components.schemas,
+      ...uploadfileApi.components.schemas,
+      ...reminderApi.components.schemas,
+      ...reminderUnitApi.components.schemas,
+      ...reportSummaryApi.components.schemas
+    },
+    securitySchemes: { bearerAuth: { type: "http", scheme: "bearer", bearerFormat: "JWT" } }
+  },
+  security: [{ bearerAuth: [] }]
+};
+
+/* ======= index.html snippet (how to load) ======= */
+/*
+  In your swagger static folder, include files in this order in index.html:
+
+  <script src="./apis/auth.api.js"></script>
+  <script src="./apis/user.api.js"></script>
+  ... all other api files ...
+  <script src="./swagger-config.js"></script>
+  <script src="./swagger-initializer.js"></script>
+*/
+
+/* END OF SPEC BUNDLE */
