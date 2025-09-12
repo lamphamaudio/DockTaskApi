@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AIBE.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a18beec7b4ff92ddd27673878532e50a467c84d5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b78fc28763b4c1aa631aa476d4d2c1f83452dea9")]
 [assembly: System.Reflection.AssemblyProductAttribute("AIBE.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AIBE.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

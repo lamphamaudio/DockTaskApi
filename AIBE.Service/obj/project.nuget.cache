@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Y4+tsr4My9Y=",
+  "dgSpecHash": "x6jqlTKRU0Y=",
   "success": true,
-  "projectFilePath": "D:\\Zamiga\\project5\\doc-task-asp.net\\AIBE.Service\\AIBE.Service.csproj",
+  "projectFilePath": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Service\\AIBE.Service.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lam Pham\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\Lam Pham\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
