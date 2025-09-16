@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AIBE.Core.DTOs.Frequency;
 
 namespace AIBE.Core.DTOs.Task
 {
@@ -36,7 +37,7 @@ namespace AIBE.Core.DTOs.Task
 
         public int? UnitId { get; set; }
 
-        public int? FrequencyId { get; set; }
+        public FrequencyRequestDto? FrequencyDto { get; set; }
 
         public int? Percentagecomplete { get; set; }
 

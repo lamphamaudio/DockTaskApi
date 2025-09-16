@@ -32,6 +32,7 @@ builder.Services.AddDbContext<DoctaskAiContext>(options =>
 });
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddAutoMapper(typeof(UserMapper));
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IOrgRepository, OrgRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();

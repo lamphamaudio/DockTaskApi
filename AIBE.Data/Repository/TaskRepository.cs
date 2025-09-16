@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AIBE.Core.DTOs.Frequency;
+using AIBE.Core.DTOs.FrequencyDetail;
 using AIBE.Core.DTOs.Task;
 using AIBE.Core.IRepository;
 using AIBE.Core.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
@@ -15,20 +21,32 @@ namespace AIBE.Data.Repository
     public class TaskRepository : ITaskRepository
     {
         private readonly DoctaskAiContext _context;
-        public readonly IMapper _mapper;
-        public TaskRepository(DoctaskAiContext context, IMapper mapper)
+        private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public TaskRepository(DoctaskAiContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
-            _mapper = mapper;   
+            _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
         }
-        public async Task<TaskRequestDto> CreateTask(TaskRequestDto taskRequestDto)
+        public async Task<TaskRequestDto> CreateTask(TaskRequestDto taskRequestDto, FrequencyRequestDto frequencyRequestDto, Frequencydetail frequencydetail)
         {
-            var existingTask = await _context.Tasks.FirstOrDefaultAsync(t => t.Title == taskRequestDto.Title);
+            var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                taskRequestDto.AssignerId = int.Parse(userId);
+            }
+
+            var existingTask = await _context.Tasks
+                .FirstOrDefaultAsync(t => t.Title == taskRequestDto.Title);
+
             if (existingTask != null)
             {
                 throw new Exception("Task with the same title already exists.");
             }
-
+            
             var task = _mapper.Map<Core.Models.Task>(taskRequestDto);
             await _context.Tasks.AddAsync(task);
             await _context.SaveChangesAsync();
@@ -107,16 +125,76 @@ namespace AIBE.Data.Repository
         }
 
 
-        public async Task<TaskRequestDto> UpdateTask(int id,TaskRequestDto taskRequestDto)
+        [HttpPut("{id:int}")]
+        public async Task<TaskRequestDto> UpdateTask([FromRoute] int id, [FromBody] TaskRequestDto taskRequestDto)
         {
-            var task = await _context.Tasks.FirstOrDefaultAsync(t => t.TaskId == id);
-            if (task == null)
+            var existingTask = await _context.Tasks
+                .Include(t => t.Frequency)
+                .ThenInclude(f => f.FrequencyDetails)
+                .FirstOrDefaultAsync(t => t.TaskId == id);
+
+            if (existingTask == null)
             {
-                return null;
+                throw new Exception("Task not found.");
             }
-            _mapper.Map(taskRequestDto, task);
+
+            var duplicateTask = await _context.Tasks
+                .FirstOrDefaultAsync(t => t.Title == taskRequestDto.Title);
+            if (duplicateTask != null)
+            {
+                throw new Exception("Task with the same title already exists.");
+            }
+
+            var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!string.IsNullOrEmpty(userId))
+            {
+                taskRequestDto.AssignerId = int.Parse(userId);
+            }
+
+            _mapper.Map(taskRequestDto, existingTask);
+
+            if (taskRequestDto.FrequencyDto != null)
+            {
+                if (existingTask.Frequency?.FrequencyDetails != null)
+                {
+                    _context.FrequencyDetails.RemoveRange(existingTask.Frequency.FrequencyDetails);
+                }
+
+                if (existingTask.Frequency != null)
+                {
+                    _context.Frequencies.Remove(existingTask.Frequency);
+                }
+
+                var frequency = _mapper.Map<Frequency>(taskRequestDto.FrequencyDto);
+                if (taskRequestDto.FrequencyDto.frequencydetail != null)
+                {
+                    var frequencyDetail = new FrequencyDetail
+                    {
+                        DayOfWeek = taskRequestDto.FrequencyDto.frequencydetail.DayOfWeek,
+                        DayOfMonth = taskRequestDto.FrequencyDto.frequencydetail.DayOfMonth,
+                        Frequency = frequency
+                    };
+                    frequency.FrequencyDetails.Add(frequencyDetail);
+                }
+                existingTask.Frequency = frequency;
+            }
+            else
+            {
+                if (existingTask.Frequency?.FrequencyDetails != null)
+                {
+                    _context.FrequencyDetails.RemoveRange(existingTask.Frequency.FrequencyDetails);
+                }
+                if (existingTask.Frequency != null)
+                {
+                    _context.Frequencies.Remove(existingTask.Frequency);
+                }
+                existingTask.Frequency = null;
+            }
+
+            _context.Tasks.Update(existingTask);
             await _context.SaveChangesAsync();
-            return _mapper.Map<TaskRequestDto>(task);
+
+            return _mapper.Map<TaskRequestDto>(existingTask);
         }
 
     }
