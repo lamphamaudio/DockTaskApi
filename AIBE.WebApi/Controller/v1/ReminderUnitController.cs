@@ -95,7 +95,7 @@ namespace AIBE.WebApi.Controller.v1
             var success = await _reminderUnitRepository.DeleteAsync(id);
             if (!success)
             {
-                return StatusCode(500, "A problem occurred while deleting the user.");
+                return StatusCode(500, "A problem occurred while deleting the reminderunit.");
             }
 
             return NoContent();

@@ -52,9 +52,9 @@ namespace AIBE.Data.Repository
                 .ToListAsync();
         }
 
-        public Task<Reminderunit?> GetByIdAsync(int id)
+        public async Task<Reminderunit?> GetByIdAsync(int id)
         {
-            return _context.Reminderunits.FirstOrDefaultAsync(r => r.Id == id);
+            return await _context.Reminderunits.FirstOrDefaultAsync(r => r.Id == id);
         }
     }
 }
