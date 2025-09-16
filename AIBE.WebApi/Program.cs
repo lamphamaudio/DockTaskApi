@@ -34,6 +34,7 @@ builder.Services.AddAutoMapper(typeof(UserMapper));
 builder.Services.AddScoped<IOrgRepository, OrgRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IReminderUnitRepository, ReminderUnitRepository>();
 
 builder.Services.AddAuthentication(Options =>
 {
