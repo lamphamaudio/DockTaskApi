@@ -33,7 +33,7 @@ namespace AIBE.WebApi.Controller.v1
         }
 
         /// <summary>
-        /// Xem chi tiết các user.
+        /// Xem chi tiết id user.
         /// </summary>
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
