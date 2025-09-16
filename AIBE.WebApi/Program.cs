@@ -39,6 +39,8 @@ builder.Services.AddScoped<IReminderUnitRepository, ReminderUnitRepository>();
 builder.Services.AddScoped<IunitRepository, UnitRepository>();
 builder.Services.AddScoped<IPeriodRepository, PeriodRepository>();
 builder.Services.AddScoped<IReminderrepository, ReminderRepository>();
+builder.Services.AddScoped<IPositionRepository, PositionRepository>();
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 
 builder.Services.AddAuthentication(Options =>
 {
