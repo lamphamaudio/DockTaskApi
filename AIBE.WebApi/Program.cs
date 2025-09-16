@@ -2,6 +2,7 @@
 using AIBE.Core.Helpers.mapper;
 using AIBE.Core.Helpers.middleware;
 using AIBE.Core.IRepository;
+using AIBE.Core.IService;
 using AIBE.Core.Models;
 using AIBE.Data;
 using AIBE.Data.Repository;
@@ -35,6 +36,9 @@ builder.Services.AddScoped<IOrgRepository, OrgRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IReminderUnitRepository, ReminderUnitRepository>();
+builder.Services.AddScoped<IunitRepository, UnitRepository>();
+builder.Services.AddScoped<IPeriodRepository, PeriodRepository>();
+builder.Services.AddScoped<IReminderrepository, ReminderRepository>();
 
 builder.Services.AddAuthentication(Options =>
 {
