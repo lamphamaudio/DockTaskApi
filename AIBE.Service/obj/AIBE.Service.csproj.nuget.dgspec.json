@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Service\\AIBE.Service.csproj": {}
+    "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Service\\AIBE.Service.csproj": {}
   },
   "projects": {
-    "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj": {
+    "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj",
+        "projectUniqueName": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj",
         "projectName": "AIBE.Core",
-        "projectPath": "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj",
-        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Core\\obj\\",
+        "projectPath": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj",
+        "packagesPath": "C:\\Users\\Lam Pham\\.nuget\\packages\\",
+        "outputPath": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Lam Pham\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -98,6 +98,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.19, 8.0.19]"
+            },
+            {
+              "name": "Microsoft.Net.Sdk.Compilers.Toolset",
+              "version": "[9.0.304, 9.0.304]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.19, 8.0.19]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[8.0.19, 8.0.19]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -107,20 +125,20 @@
         }
       }
     },
-    "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Data\\AIBE.Data.csproj": {
+    "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Data\\AIBE.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Data\\AIBE.Data.csproj",
+        "projectUniqueName": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Data\\AIBE.Data.csproj",
         "projectName": "AIBE.Data",
-        "projectPath": "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Data\\AIBE.Data.csproj",
-        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Data\\obj\\",
+        "projectPath": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Data\\AIBE.Data.csproj",
+        "packagesPath": "C:\\Users\\Lam Pham\\.nuget\\packages\\",
+        "outputPath": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Lam Pham\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -135,8 +153,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj": {
-                "projectPath": "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj"
+              "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj": {
+                "projectPath": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj"
               }
             }
           }
@@ -193,6 +211,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.19, 8.0.19]"
+            },
+            {
+              "name": "Microsoft.Net.Sdk.Compilers.Toolset",
+              "version": "[9.0.304, 9.0.304]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.19, 8.0.19]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[8.0.19, 8.0.19]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -202,20 +238,20 @@
         }
       }
     },
-    "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Service\\AIBE.Service.csproj": {
+    "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Service\\AIBE.Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Service\\AIBE.Service.csproj",
+        "projectUniqueName": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Service\\AIBE.Service.csproj",
         "projectName": "AIBE.Service",
-        "projectPath": "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Service\\AIBE.Service.csproj",
-        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Service\\obj\\",
+        "projectPath": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Service\\AIBE.Service.csproj",
+        "packagesPath": "C:\\Users\\Lam Pham\\.nuget\\packages\\",
+        "outputPath": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Service\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Lam Pham\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -230,11 +266,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj": {
-                "projectPath": "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj"
+              "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj": {
+                "projectPath": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Core\\AIBE.Core.csproj"
               },
-              "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Data\\AIBE.Data.csproj": {
-                "projectPath": "D:\\ZAMIGA\\T1Pilot\\DockTaskApi\\AIBE.Data\\AIBE.Data.csproj"
+              "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Data\\AIBE.Data.csproj": {
+                "projectPath": "D:\\Zamiga\\coding\\DockTaskApi\\AIBE.Data\\AIBE.Data.csproj"
               }
             }
           }
@@ -295,6 +331,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.19, 8.0.19]"
+            },
+            {
+              "name": "Microsoft.Net.Sdk.Compilers.Toolset",
+              "version": "[9.0.304, 9.0.304]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.19, 8.0.19]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[8.0.19, 8.0.19]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
