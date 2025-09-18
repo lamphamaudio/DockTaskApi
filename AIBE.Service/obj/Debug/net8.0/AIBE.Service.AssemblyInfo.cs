@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AIBE.Service")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4d0d55c12bd77de3f24ea4a5f3976a6fa4ee0798")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+26bbb3c621ca4195aaf47c875624edc1f1a1e41f")]
 [assembly: System.Reflection.AssemblyProductAttribute("AIBE.Service")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AIBE.Service")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
